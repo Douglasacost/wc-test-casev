@@ -7,10 +7,11 @@
       >
         {{ isWalletConnected ? 'Logout' : 'Login' }}
       </button>
+      <ParentComponent />
       <div>
-        <ul>
+        <ul class="p-4">
           <li class="flex gap-2">
-            <span>Wallet Connected</span>
+            <span>Connected account:</span>
             <span>{{ walletConnected }}</span>
           </li>
         </ul>
@@ -45,10 +46,10 @@
 <script setup lang="ts">
 import BaseLayout from '@/layouts/BaseLayout.vue'
 import { init } from '@/composables/reown.ts'
-import { isSigningIn, useWalletAuth } from '@/composables/wallet/use-wallet-auth.ts'
+import { isRequestSignLoginModalOpen, isSigningIn, useWalletAuth } from '@/composables/wallet/use-wallet-auth.ts'
 import RequestSignLoginModal from './components/RequestSignLoginModal.vue'
-import { isRequestSignLoginModalOpen } from './composables/wallet/wallet-connect'
 import { isWalletConnected, latestEvents, walletConnected } from './composables/auth'
+import ParentComponent from './components/ParentComponent.vue'
 
 init()
 const { authenticate, logout, login } = useWalletAuth()

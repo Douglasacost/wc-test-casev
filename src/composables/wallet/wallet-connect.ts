@@ -3,7 +3,6 @@ import { ref, watch } from 'vue'
 import { latestEvents, loginProvider } from '../auth'
 
 let isWatcherInitialized = false
-const isRequestSignLoginModalOpen = ref(false)
 const isWCReady = ref(false)
 
 const useWalletEvents = () => {
@@ -30,12 +29,6 @@ const useWalletEvents = () => {
       case 'SELECT_WALLET':
         loginProvider.value = events.data.properties.name
         break
-
-      case 'CONNECT_SUCCESS':
-      case 'SOCIAL_LOGIN_SUCCESS':
-      case 'EMAIL_VERIFICATION_CODE_PASS':
-        isRequestSignLoginModalOpen.value = true
-        break
       }
     })
 
@@ -43,4 +36,4 @@ const useWalletEvents = () => {
   }
 }
 
-export { useWalletEvents, isWCReady, isRequestSignLoginModalOpen }
+export { useWalletEvents, isWCReady }

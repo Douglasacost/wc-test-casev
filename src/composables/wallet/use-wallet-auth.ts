@@ -12,12 +12,12 @@ import {
   useDisconnect,
 } from '@reown/appkit/vue'
 import {
-  isRequestSignLoginModalOpen,
   isWCReady,
   useWalletEvents,
 } from '@/composables/wallet/wallet-connect.ts'
 import { config } from '../reown'
 
+export const isRequestSignLoginModalOpen = ref(false)
 export const isSigningIn = ref(false)
 const isEOA = ref(false)
 
@@ -74,10 +74,6 @@ export const useWalletAuth = () => {
 
   async function login() {
     if (!isWCReady.value) return
-    if (account.value.address) {
-      isRequestSignLoginModalOpen.value = true
-      return
-    }
     await open({ view: 'Connect', namespace: 'eip155' })
   }
 
@@ -113,6 +109,15 @@ export const useWalletAuth = () => {
       isEOA.value = accountType === 'eoa'
     },
     { immediate: true },
+  )
+
+  watch(
+    () => isRequestSignLoginModalOpen.value,
+    (value, oldValue) => {
+      if (value && !oldValue && !isWalletConnected.value) {
+        isRequestSignLoginModalOpen.value = false
+      }
+    },
   )
 
   return {
