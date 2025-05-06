@@ -120,6 +120,13 @@ export const useWalletAuth = () => {
     },
   )
 
+  watch(
+    () => account.value,
+    (value) => {
+      console.log('account.value', value)
+    },
+  )
+
   return {
     login,
     logout,
